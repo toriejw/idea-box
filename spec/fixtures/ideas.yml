@@ -1,0 +1,11 @@
+one:
+  id: 1
+  title: "idea title 1"
+  body: "idea body 1"
+  quality: 3
+
+two:
+  id: 2
+  title: "idea title 2"
+  body: "idea body 2"
+  quality: 10
