@@ -33,41 +33,41 @@ describe Api::V1::IdeasController, type: :controller do
     expect(json_response.last["quality"]).to eq(Idea.last.quality)
   end
 
-  # it "sends a single idea" do
-  #   idea = create_idea
-  #
-  #   get :show, { id: idea.id }, format: :json
-  #
-  #   json_response = parse_response
-  #
-  #   expect(response).to be_success
-  #
-  #   expect(json_response["id"]).to eq(Idea.last.id)
-  #   expect(json_response["title"]).to eq(Idea.last.title)
-  #   expect(json_response["body"]).to eq(Idea.last.body)
-  #   expect(json_response["quality"]).to eq(Idea.last.quality)
-  # end
-  #
-  # it "creates an idea" do
-  #   old_num_of_ideas = Idea.count
-  #   idea_params = { title: "new title", body: "new body" }
-  #
-  #   post :create, idea: idea_params, format: :json
-  #
-  #   new_num_of_ideas = Idea.count
-  #   json_response = parse_response
-  #
-  #   expect(response).to be_success
-  #   expect(json_response["id"]).to eq(Idea.last.id)
-  #   expect(json_response["title"]).to eq(Idea.last.title)
-  #   expect(json_response["body"]).to eq(Idea.last.body)
-  #   expect(json_response["quality"]).to eq(Idea.last.quality)
-  #
-  #   expect(Idea.last.title).to eq(idea_params[:title])
-  #   expect(Idea.last.body).to eq(idea_params[:body])
-  #   expect(new_num_of_ideas - old_num_of_ideas).to eq(1)
-  # end
-  #
+  it "sends a single idea" do
+    idea = create_idea
+
+    get :show, id: idea.id, format: :json
+
+    json_response = parse_response
+
+    expect(response).to be_success
+
+    expect(json_response["id"]).to eq(Idea.last.id)
+    expect(json_response["title"]).to eq(Idea.last.title)
+    expect(json_response["body"]).to eq(Idea.last.body)
+    expect(json_response["quality"]).to eq(Idea.last.quality)
+  end
+
+  it "creates an idea" do
+    old_num_of_ideas = Idea.count
+    idea_params = { title: "new title", body: "new body" }
+
+    post :create, idea: idea_params, format: :json
+
+    new_num_of_ideas = Idea.count
+    json_response = parse_response
+
+    expect(response).to be_success
+    expect(json_response["id"]).to eq(Idea.last.id)
+    expect(json_response["title"]).to eq(Idea.last.title)
+    expect(json_response["body"]).to eq(Idea.last.body)
+    expect(json_response["quality"]).to eq(Idea.last.quality)
+
+    expect(Idea.last.title).to eq(idea_params[:title])
+    expect(Idea.last.body).to eq(idea_params[:body])
+    expect(new_num_of_ideas - old_num_of_ideas).to eq(1)
+  end
+
   # it "updates an idea" do
   #   old_num_of_ideas = Idea.count
   #

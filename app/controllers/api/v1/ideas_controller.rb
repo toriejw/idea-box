@@ -6,6 +6,7 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def show
+    respond_with Idea.find(params[:id])
   end
 
   def create
