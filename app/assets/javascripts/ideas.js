@@ -2,7 +2,7 @@ function renderIdea(idea){
   $('#idea-list').append(
     "<div class='idea' data-id='" + idea.id + "'><h3>" +
     idea.title + "</h3><p>" +
-    idea.body + "</p><p>" +
+    idea.body + "</p><p> Rating: " +
     idea.rating + "</p></div>"
   )
 }
