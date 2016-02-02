@@ -15,12 +15,12 @@ describe Api::V1::IdeasController, type: :controller do
     num_of_ideas = Idea.count
 
     expect(response).to be_success
-    expect(json_response.length).to eq(num_of_ideas)
+    expect(json_response["ideas"].length).to eq(num_of_ideas)
 
-    expect(json_response.last["id"]).to eq(Idea.last.id)
-    expect(json_response.last["title"]).to eq(Idea.last.title)
-    expect(json_response.last["body"]).to eq(Idea.last.body)
-    expect(json_response.last["quality"]).to eq(Idea.last.quality)
+    expect(json_response["ideas"].last["id"]).to eq(Idea.last.id)
+    expect(json_response["ideas"].last["title"]).to eq(Idea.last.title)
+    expect(json_response["ideas"].last["body"]).to eq(Idea.last.body)
+    expect(json_response["ideas"].last["rating"]).to eq("genius")
   end
 
   it "sends a single idea" do
@@ -32,10 +32,10 @@ describe Api::V1::IdeasController, type: :controller do
 
     expect(response).to be_success
 
-    expect(json_response["id"]).to eq(idea.id)
-    expect(json_response["title"]).to eq(idea.title)
-    expect(json_response["body"]).to eq(idea.body)
-    expect(json_response["quality"]).to eq(idea.quality)
+    expect(json_response["idea"]["id"]).to eq(idea.id)
+    expect(json_response["idea"]["title"]).to eq(idea.title)
+    expect(json_response["idea"]["body"]).to eq(idea.body)
+    expect(json_response["idea"]["rating"]).to eq("swill")
   end
 
   it "creates an idea" do
@@ -48,10 +48,10 @@ describe Api::V1::IdeasController, type: :controller do
     json_response = parse_response
 
     expect(response).to be_success
-    expect(json_response["id"]).to eq(Idea.last.id)
-    expect(json_response["title"]).to eq(Idea.last.title)
-    expect(json_response["body"]).to eq(Idea.last.body)
-    expect(json_response["quality"]).to eq(Idea.last.quality)
+    expect(json_response["idea"]["id"]).to eq(Idea.last.id)
+    expect(json_response["idea"]["title"]).to eq(Idea.last.title)
+    expect(json_response["idea"]["body"]).to eq(Idea.last.body)
+    expect(json_response["idea"]["rating"]).to eq("swill")
 
     expect(Idea.last.title).to eq(idea_params[:title])
     expect(Idea.last.body).to eq(idea_params[:body])
