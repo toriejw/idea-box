@@ -3,7 +3,6 @@ require "rails_helper"
 feature "creating an idea" do
 
   scenario "user can create idea from home page" do
-    pending
     old_num_of_ideas = Idea.count
     visit root_path
 
