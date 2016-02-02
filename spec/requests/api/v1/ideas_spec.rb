@@ -68,26 +68,25 @@ describe Api::V1::IdeasController, type: :controller do
     expect(new_num_of_ideas - old_num_of_ideas).to eq(1)
   end
 
-  # it "updates an idea" do
-  #   old_num_of_ideas = Idea.count
-  #
-  #   idea = create_idea
-  #   idea_params = { title: "updated title", body: "updated body" }
-  #
-  #   put :update, id: idea.id, idea: idea_params, format: :json
-  #
-  #   new_num_of_ideas = Idea.count
-  #   json_response = parse_response
-  #   idea = Idea.find(idea.id)
-  #
-  #   expect(response).to be_success
-  #   expect(json_response).to eq("")
-  #
-  #   expect(idea.title).to eq(idea_params[:title])
-  #   expect(idea.body).to eq(idea_params[:body])
-  #   expect(new_num_of_ideas - old_num_of_ideas).to eq(0)
-  # end
-  #
+  it "updates an idea" do
+    idea = create_idea
+    old_num_of_ideas = Idea.count
+
+    idea_params = { title: "updated title", body: "updated body" }
+
+    put :update, id: idea.id, title: idea_params[:title], body: idea_params[:body], format: :json
+
+    new_num_of_ideas = Idea.count
+    idea = Idea.find(idea.id)
+
+    expect(response).to be_success
+    expect(response.body).to eq("")
+
+    expect(idea.title).to eq(idea_params[:title])
+    expect(idea.body).to eq(idea_params[:body])
+    expect(new_num_of_ideas - old_num_of_ideas).to eq(0)
+  end
+
   # it "deletes an idea" do
   #   create_ideas(2)
   #   old_num_of_ideas = Idea.count
