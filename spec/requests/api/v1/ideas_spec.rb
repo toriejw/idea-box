@@ -1,6 +1,7 @@
 require "rails_helper"
 
-describe "Api::V1::IdeasController", type: :controller do
+describe Api::V1::IdeasController, type: :controller do
+
   def parse_response
     JSON.parse(response.body)
   end
@@ -24,6 +25,21 @@ describe "Api::V1::IdeasController", type: :controller do
     expect(json_response["ideas"].last["title"]).to eq(Idea.last.title)
     expect(json_response["ideas"].last["body"]).to eq(Idea.last.body)
     expect(json_response["ideas"].last["quality"]).to eq(Idea.last.quality)
+  end
+
+  it "sends a single idea" do
+    idea = create_idea
+
+    get :show, { id: idea.id }, format: :json
+
+    json_response = parse_response
+
+    expect(response).to be_success
+
+    expect(json_response["id"]).to eq(Idea.last.id)
+    expect(json_response["title"]).to eq(Idea.last.title)
+    expect(json_response["body"]).to eq(Idea.last.body)
+    expect(json_response["quality"]).to eq(Idea.last.quality)
   end
 
   it "creates an idea" do
@@ -50,9 +66,9 @@ describe "Api::V1::IdeasController", type: :controller do
     old_num_of_ideas = Idea.count
 
     idea = create_idea
-    idea_params = { id: idea.id, title: "updated title", body: "updated body" }
+    idea_params = { title: "updated title", body: "updated body" }
 
-    put :update, idea: idea_params, format: :json
+    put :update, id: idea.id, idea: idea_params, format: :json
 
     new_num_of_ideas = Idea.count
     json_response = parse_response
@@ -69,7 +85,7 @@ describe "Api::V1::IdeasController", type: :controller do
   it "deletes an idea" do
     old_num_of_ideas = Idea.count
 
-    delete :destroy, idea_id: Idea.last.id, format: :json
+    delete :destroy, id: Idea.last.id, format: :json
 
     new_num_of_ideas = Idea.count
     json_response = parse_response
