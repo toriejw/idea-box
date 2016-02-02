@@ -87,19 +87,18 @@ describe Api::V1::IdeasController, type: :controller do
     expect(new_num_of_ideas - old_num_of_ideas).to eq(0)
   end
 
-  # it "deletes an idea" do
-  #   create_ideas(2)
-  #   old_num_of_ideas = Idea.count
-  #
-  #   delete :destroy, id: Idea.last.id, format: :json
-  #
-  #   new_num_of_ideas = Idea.count
-  #   json_response = parse_response
-  #
-  #   expect(response).to be_success
-  #   expect(json_response).to eq("")
-  #
-  #   expect(new_num_of_ideas - old_num_of_ideas).to eq(-1)
-  # end
+  it "deletes an idea" do
+    create_ideas(2)
+    old_num_of_ideas = Idea.count
+
+    delete :destroy, id: Idea.last.id, format: :json
+
+    new_num_of_ideas = Idea.count
+
+    expect(response).to be_success
+    expect(response.body).to eq("")
+
+    expect(new_num_of_ideas - old_num_of_ideas).to eq(-1)
+  end
 
 end
