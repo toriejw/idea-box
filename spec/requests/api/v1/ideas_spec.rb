@@ -6,16 +6,6 @@ describe Api::V1::IdeasController, type: :controller do
     JSON.parse(response.body)
   end
 
-  def create_idea
-    Idea.create(title: "idea title", body: "idea body")
-  end
-
-  def create_ideas(num)
-    num.times do |i|
-      Idea.create(title: "idea title #{i}", body: "idea body #{i}")
-    end
-  end
-
   it "sends a list of ideas" do
     create_ideas(4)
 
