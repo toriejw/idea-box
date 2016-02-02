@@ -10,6 +10,7 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def create
+    respond_with :api, :v1, Idea.create(idea_params)
   end
 
   def update
@@ -18,4 +19,9 @@ class Api::V1::IdeasController < ApplicationController
   def destroy
   end
 
+  private
+
+    def idea_params
+      params.permit(:title, :body)
+    end
 end

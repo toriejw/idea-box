@@ -52,7 +52,7 @@ describe Api::V1::IdeasController, type: :controller do
     old_num_of_ideas = Idea.count
     idea_params = { title: "new title", body: "new body" }
 
-    post :create, idea: idea_params, format: :json
+    post :create, title: idea_params[:title], body: idea_params[:body], format: :json
 
     new_num_of_ideas = Idea.count
     json_response = parse_response
