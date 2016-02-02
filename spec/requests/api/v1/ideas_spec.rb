@@ -42,10 +42,10 @@ describe Api::V1::IdeasController, type: :controller do
 
     expect(response).to be_success
 
-    expect(json_response["id"]).to eq(Idea.last.id)
-    expect(json_response["title"]).to eq(Idea.last.title)
-    expect(json_response["body"]).to eq(Idea.last.body)
-    expect(json_response["quality"]).to eq(Idea.last.quality)
+    expect(json_response["id"]).to eq(idea.id)
+    expect(json_response["title"]).to eq(idea.title)
+    expect(json_response["body"]).to eq(idea.body)
+    expect(json_response["quality"]).to eq(idea.quality)
   end
 
   it "creates an idea" do
