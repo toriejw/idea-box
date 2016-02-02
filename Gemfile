@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'responders'
 gem 'haml'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug'
@@ -20,6 +21,7 @@ group :development, :test do
   gem 'pry'
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :development do
