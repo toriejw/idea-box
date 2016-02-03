@@ -29,8 +29,8 @@ $(document).ready(function(){
       type: 'POST',
       url: '/api/v1/ideas',
       data: ideaParams,
-      success: function(idea){
-        renderIdea(idea)
+      success: function(response){
+        renderIdea(response.idea)
       },
       error: function(xhr){
         console.log(xhr)
