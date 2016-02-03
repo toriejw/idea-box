@@ -3,7 +3,7 @@ function renderIdea(idea){
     "<div class='idea' data-id='" + idea.id + "'><h3>" +
     idea.title + "</h3><p>" +
     idea.body + "</p><p> Rating: " +
-    idea.rating + "</p></div>"
+    idea.rating + "</p><button class='btn btn-danger' id='delete-btn' data-id='" + idea.id + "'>Delete</button></div>"
   )
 }
 
@@ -43,4 +43,21 @@ $(document).ready(function(){
       }
     })
   })
+
+  $('#idea-list').on('click', '#delete-btn', function(){
+    var $ideaId = $(this).attr('data-id')
+    var $idea = $('.idea[data-id=' + $ideaId + ']')
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/v1/ideas/' + $ideaId,
+      success: function(){
+        $idea.remove()
+      },
+      error: function(xhr){
+        console.log(xhr)
+      }
+    })
+  })
+
 })

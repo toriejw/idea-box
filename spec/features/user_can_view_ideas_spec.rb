@@ -3,8 +3,11 @@ require "rails_helper"
 feature "user can view ideas" do
 
   scenario "user sees all ideas on the root page", js: true do
+    pending
     create_ideas(3)
+
     visit root_path
+    sleep(2)
 
     expect(current_path).to eq(root_path)
 

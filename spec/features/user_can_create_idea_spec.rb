@@ -2,14 +2,15 @@ require "rails_helper"
 
 feature "creating an idea" do
 
-  scenario "user can create idea from home page" do
-    pending
+  scenario "user can create idea from home page", js: true do
     old_num_of_ideas = Idea.count
     visit root_path
 
     fill_in "title", with: "new idea title"
     fill_in "body", with: "new idea body"
     click_button "Save"
+
+    sleep(2)
 
     new_num_of_ideas = Idea.count
 
