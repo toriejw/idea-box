@@ -3,7 +3,10 @@ function renderIdea(idea){
     "<div class='idea' data-id='" + idea.id + "'><h3>" +
     idea.title + "</h3><p>" +
     idea.body + "</p><p> Rating: " +
-    idea.rating + "</p><button class='btn btn-danger' id='delete-btn' data-id='" + idea.id + "'>Delete</button></div>"
+    idea.rating + "</p><button class='btn btn-primary'><i class='glyphicon glyphicon-thumbs-up'></i></button>" +
+    "<button class='btn btn-primary'><i class='glyphicon glyphicon-thumbs-down'></i></button>" +
+    "<button class='btn btn-danger' id='delete-btn' data-id='" +
+    idea.id + "'>Delete</button></div>"
   )
 }
 
