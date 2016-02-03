@@ -19,6 +19,11 @@ function loadIdeas() {
   })
 }
 
+function clearTextBoxes() {
+  $('#form-title').val('');
+  $('#form-body').val('');
+}
+
 $(document).ready(function(){
   loadIdeas();
 
@@ -30,7 +35,8 @@ $(document).ready(function(){
       url: '/api/v1/ideas',
       data: ideaParams,
       success: function(response){
-        renderIdea(response.idea)
+        renderIdea(response.idea);
+        clearTextBoxes();
       },
       error: function(xhr){
         console.log(xhr)
