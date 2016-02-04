@@ -4,7 +4,47 @@ $(document).ready(function(){
   deleteIdea();
   upVoteIdea();
   downVoteIdea();
+  editIdeaContent();
 })
+
+function editIdeaContent() {
+  $('#idea-list').on('click', '.edit-btn', function(){
+    var $ideaId = $(this).attr('data-id')
+    var $idea = $('.idea[data-id=' + $ideaId + ']')
+
+    if ($idea.find('form')) {
+      $idea.find('form').remove()
+    }
+
+    var $editForm = "<form class='form-group'>" +
+    "<br><label>Title:</label>" +
+    "<input type='text' name='title' class='form-control title-input'value='" + $idea.find('.idea-title').text() + "'><br>" +
+    "<label>Body:</label>" +
+    "<input type='text' name='body' class='form-control body-input' value='" + $idea.find('.idea-body').text() + "'><br>" +
+    "<button class='save-edited-idea-btn btn btn-info'>Save</button>" +
+    "</form>"
+
+    $idea.append($editForm)
+    saveEditedIdea($ideaId, $idea)
+  })
+}
+
+function saveEditedIdea(id, ideaDiv) {
+  ideaDiv.on('click', '.save-edited-idea-btn', function(e){
+    e.preventDefault()
+    var $ideaParams = { title: ideaDiv.find('.title-input').val(),
+                        body: ideaDiv.find('.body-input').val() }
+
+    $.ajax({
+      type: 'PUT',
+      url: '/api/v1/ideas/' + id,
+      data: $ideaParams,
+      success: function(response){
+        ideaDiv.find('form').remove()
+      }
+    })
+  })
+}
 
 function upVoteIdea() {
   $('#idea-list').on('click', '.up-vote-btn', function(){
@@ -73,15 +113,17 @@ function quantifyRating(previousRating){
 
 function renderIdea(idea){
   $('#idea-list').append(
-    "<div class='idea' data-id='" + idea.id + "'><h3>" +
-    idea.title + "</h3><p>" +
+    "<div class='idea' data-id='" + idea.id + "'><h3 class='idea-title'>" +
+    idea.title + "</h3><p class='idea-body'>" +
     idea.body + "</p><p class='rating'> Rating: " +
     idea.rating + "</p><button class='btn btn-primary up-vote-btn' data-id='" +
     idea.id + "'><i class='glyphicon glyphicon-thumbs-up'></i></button>" +
     "<button class='btn btn-primary down-vote-btn' data-id='" +
     idea.id + "'><i class='glyphicon glyphicon-thumbs-down' data-id='" +
     idea.id + "'></i></button>" +
-    "<button class='btn btn-danger' id='delete-btn' data-id='" +
+    "  <button type='button' class='btn btn-info edit-btn' data-id='" +
+    idea.id + "'>Edit</button>" +
+    "  <button class='btn btn-danger' id='delete-btn' data-id='" +
     idea.id + "'>Delete</button></div>"
   )
 }
