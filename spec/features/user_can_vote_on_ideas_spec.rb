@@ -24,4 +24,26 @@ feature "user can up and down vote ideas" do
     expect(Idea.last.quality).to eq(2)
   end
 
+  scenario "user can down vote", js: true do
+    visit root_path
+
+    fill_in "title", with: "new idea title"
+    fill_in "body", with: "new idea body"
+    click_button "Save"
+
+    sleep(1)
+
+    Idea.last.quality = 2
+
+    page.first(".down-vote-btn").click
+
+    expect(page).to have_content("plausible")
+    expect(Idea.last.quality).to eq(1)
+
+    page.first(".down-vote-btn").click
+
+    expect(page).to have_content("swill")
+    expect(Idea.last.quality).to eq(0)
+  end
+
 end
