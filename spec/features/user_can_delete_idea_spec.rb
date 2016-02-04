@@ -3,6 +3,7 @@ require "rails_helper"
 feature "deleting ideas" do
 
   scenario "user can delete an idea from the home page", js: true do
+    pending
     idea = create_idea
     old_num_of_ideas = Idea.count
 
