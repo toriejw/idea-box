@@ -27,13 +27,15 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-  config.before :each do
+
+  config.before :each, js: true do
     Capybara.current_driver = :selenium
     DatabaseCleaner.start
   end
-  config.after :each do
-    Capybara.use_default_driver
+
+  config.after :each, js: true do
     DatabaseCleaner.clean
+    Capybara.use_default_driver
   end
 
   config.infer_spec_type_from_file_location!
