@@ -13,19 +13,30 @@ function upVoteIdea() {
     var $previousRating = $idea.find('.rating')
     var $newQualityRating = findNewQualityRatingAfterUpVote($previousRating.text())
 
-    $.ajax({
-      type: 'PUT',
-      url: '/api/v1/ideas/' + $ideaId,
-      data: {quality: $newQualityRating[0]},
-      success: function(response){
-        $previousRating.html(" Rating: " + $newQualityRating[1])
-      }
-    })
-
+    updateIdeaRating($ideaId, $newQualityRating, $previousRating)
   })
 }
 
 function downVoteIdea() {
+  $('#idea-list').on('click', '.down-vote-btn', function(){
+    var $ideaId = $(this).attr('data-id')
+    var $idea = $('.idea[data-id=' + $ideaId + ']')
+    var $previousRating = $idea.find('.rating')
+    var $newQualityRating = findNewQualityRatingAfterDownVote($previousRating.text())
+
+    updateIdeaRating($ideaId, $newQualityRating, $previousRating)
+  })
+}
+
+function updateIdeaRating(ideaId, newQualityRating, previousRating){
+  $.ajax({
+    type: 'PUT',
+    url: '/api/v1/ideas/' + ideaId,
+    data: {quality: newQualityRating[0]},
+    success: function(response){
+      previousRating.html(" Rating: " + newQualityRating[1])
+    }
+  })
 }
 
 function findNewQualityRatingAfterUpVote(previousRating){
@@ -35,6 +46,16 @@ function findNewQualityRatingAfterUpVote(previousRating){
     return [1, "plausible"]
   } else {
     return [2, "genius"]
+  }
+}
+
+function findNewQualityRatingAfterDownVote(previousRating){
+  oldRating = quantifyRating(previousRating)
+
+  if (oldRating === 2) {
+    return [1, "plausible"]
+  } else {
+    return [0, "swill"]
   }
 }
 
@@ -57,7 +78,8 @@ function renderIdea(idea){
     idea.body + "</p><p class='rating'> Rating: " +
     idea.rating + "</p><button class='btn btn-primary up-vote-btn' data-id='" +
     idea.id + "'><i class='glyphicon glyphicon-thumbs-up'></i></button>" +
-    "<button class='btn btn-primary'><i class='glyphicon glyphicon-thumbs-down' data-id='" +
+    "<button class='btn btn-primary down-vote-btn' data-id='" +
+    idea.id + "'><i class='glyphicon glyphicon-thumbs-down' data-id='" +
     idea.id + "'></i></button>" +
     "<button class='btn btn-danger' id='delete-btn' data-id='" +
     idea.id + "'>Delete</button></div>"
