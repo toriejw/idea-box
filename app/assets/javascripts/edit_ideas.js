@@ -17,10 +17,12 @@ function editIdeaContent() {
     "<label>Body:</label>" +
     "<input type='text' name='body' class='form-control body-input' value='" + $idea.find('.idea-body').text() + "'><br>" +
     "<button class='save-edited-idea-btn btn btn-info'>Save</button>" +
+    "<button class='close-edit-form-btn btn btn-danger'>Cancel</button>" +
     "</form>"
 
     $idea.append($editForm)
     saveEditedIdea($ideaId, $idea)
+    closeEditForm($idea)
   })
 }
 
@@ -35,8 +37,19 @@ function saveEditedIdea(id, ideaDiv) {
       url: '/api/v1/ideas/' + id,
       data: $ideaParams,
       success: function(response){
-        ideaDiv.find('form').remove()
+        hideForm(ideaDiv)
       }
     })
   })
+}
+
+function closeEditForm(ideaDiv){
+  ideaDiv.on('click', '.close-edit-form-btn', function(e){
+    e.preventDefault()
+    hideForm(ideaDiv)
+  })
+}
+
+function hideForm(withinDiv){
+  withinDiv.find('form').remove()
 }
