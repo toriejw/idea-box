@@ -136,7 +136,7 @@ function quantifyRating(previousRating){
 }
 
 function renderIdea(idea){
-  $('#idea-list').append(
+  $('#idea-list').prepend(
     "<div class='idea' data-id='" + idea.id + "'><h3 class='idea-title'>" +
     idea.title + "</h3><p class='idea-body'>" +
     idea.body + "</p><p class='rating'> Rating: " +
