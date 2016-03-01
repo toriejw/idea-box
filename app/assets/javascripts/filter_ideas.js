@@ -1,26 +1,46 @@
 $(document).ready(function(){
   filterIdeas();
-})
+});
 
 function filterIdeas(){
   $('#filter-bar').keyup(function(){
-    var $filterQuery = $('#filter-bar').val()
+    var $filterQuery = getFilterQuery();
 
-    showFilteredIdeas($filterQuery)
-  })
+    showFilteredIdeas($filterQuery);
+  });
 }
 
 function showFilteredIdeas(filterQuery) {
-  var $ideas = $('#idea-list').find('.idea')
+  var $ideas = getIdeas();
 
   $.each($ideas, function (index, idea){
-    ideaTitle = $(idea).find('.idea-title').text()
-    ideaBody = $(idea).find('.idea-body').text()
+    showIdeaIfSearchedFor(idea, filterQuery);
+  });
+}
 
-    if (ideaTitle.indexOf(filterQuery) >= 0 || ideaBody.indexOf(filterQuery) >= 0) {
-      $(idea).show()
-    } else {
-      $(idea).hide()
-    }
-  })
+function getIdeas() {
+  return $('#idea-list').find('.idea');
+}
+
+function getFilterQuery() {
+  return $('#filter-bar').val();
+}
+
+function showIdeaIfSearchedFor(idea, filterQuery) {
+  var title = findTitle(idea);
+  var body = findBody(idea);
+
+  if (title.indexOf(filterQuery) >= 0 || body.indexOf(filterQuery) >= 0) {
+    $(idea).show();
+  } else {
+    $(idea).hide();
+  }
+}
+
+function findTitle(idea) {
+  return $(idea).find('.idea-title').text();
+}
+
+function findBody(idea) {
+  return $(idea).find('.idea-body').text();
 }
