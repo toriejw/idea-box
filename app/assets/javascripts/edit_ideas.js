@@ -1,14 +1,14 @@
 $(document).ready(function(){
   editIdeaContent();
-})
+});
 
 function editIdeaContent() {
   $('#idea-list').on('click', '.edit-btn', function(){
-    var $ideaId = $(this).attr('data-id')
-    var $idea = $('.idea[data-id=' + $ideaId + ']')
+    var $ideaId = $(this).attr('data-id');
+    var $idea = $('.idea[data-id=' + $ideaId + ']');
 
     if ($idea.find('form')) {
-      $idea.find('form').remove()
+      $idea.find('form').remove();
     }
 
     var $editForm = "<form class='form-group'>" +
@@ -20,36 +20,47 @@ function editIdeaContent() {
     "<button class='close-edit-form-btn btn btn-danger'>Cancel</button>" +
     "</form>"
 
-    $idea.append($editForm)
-    saveEditedIdea($ideaId, $idea)
-    closeEditForm($idea)
-  })
+    $idea.append($editForm);
+    saveEditedIdea($ideaId, $idea);
+    closeEditForm($idea);
+  });
 }
 
 function saveEditedIdea(id, ideaDiv) {
   ideaDiv.on('click', '.save-edited-idea-btn', function(e){
-    e.preventDefault()
-    var $ideaParams = { title: ideaDiv.find('.title-input').val(),
-                        body: ideaDiv.find('.body-input').val() }
-
+    e.preventDefault();
+    var $ideaParams = getFormParams(ideaDiv);
+    
     $.ajax({
       type: 'PUT',
       url: '/api/v1/ideas/' + id,
       data: $ideaParams,
       success: function(response){
-        hideForm(ideaDiv)
+        hideForm(ideaDiv);
       }
-    })
-  })
+    });
+  });
 }
 
 function closeEditForm(ideaDiv){
   ideaDiv.on('click', '.close-edit-form-btn', function(e){
-    e.preventDefault()
-    hideForm(ideaDiv)
-  })
+    e.preventDefault();
+    hideForm(ideaDiv);
+  });
 }
 
 function hideForm(withinDiv){
-  withinDiv.find('form').remove()
+  withinDiv.find('form').remove();
+}
+
+function getFormParams(ideaDiv) {
+  return { title: getFormTitle(ideaDiv), body: getFormBody(ideaDiv) };
+}
+
+function getFormTitle(ideaDiv) {
+  return ideaDiv.find('.title-input').val();
+}
+
+function getFormBody(ideaDiv) {
+  return ideaDiv.find('.body-input').val();
 }

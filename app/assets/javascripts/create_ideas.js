@@ -3,13 +3,13 @@ $(document).ready(function(){
 })
 
 function clearTextBoxes() {
-  $('#form-title').val('');
-  $('#form-body').val('');
+  clearFormTitle();
+  clearFormBody();
 }
 
 function createIdea() {
   $('#create-idea-btn').on('click', function(){
-    var ideaParams = { title: $('#form-title').val(), body: $('#form-body').val() }
+    var ideaParams = getFormParams();
 
     $.ajax({
       type: 'POST',
@@ -24,4 +24,16 @@ function createIdea() {
       }
     })
   })
+}
+
+function getFormParams() {
+  return { title: $('#form-title').val(), body: $('#form-body').val() };
+}
+
+function clearFormTitle() {
+  $('#form-title').val('');
+}
+
+function clearFormBody() {
+  $('#form-body').val('');
 }
